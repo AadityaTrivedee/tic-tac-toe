@@ -1,11 +1,14 @@
 from termcolor import colored
+#Defining initial values for players
 pointindexX = 0
 pointindexO = 0
 flag = False
+
+# ask() function works for repetition of game rounds
 def ask():
-    global Q
-    Q = input("Do you want to play? Y/N: ").upper()
-    if Q == "Y":
+    global question
+    question = input("Do you want to play? Y/N: ").upper()
+    if question == "Y":
         play()
     else :
         print(colored('\033[1m' + "-------------", "red"))
@@ -17,6 +20,8 @@ def ask():
         print(colored('\033[1m' + "| ","red"), '\033[1m' + colored(pointindexX,"green"),  colored('\033[1m' + " | ","red"), '\033[1m' + colored(pointindexO,"blue") , colored('\033[1m' + " |","red"))
         print(colored('\033[1m' + "-------------", "red"))
         print("Thanks")
+
+# play() function initialises the game and allows users to play
 def play():
     A = ["1","2","3","4","5","6","7","8","9"]
     player1 = colored('\033[1m' + "X", "green")
@@ -36,14 +41,18 @@ def play():
         print(colored('\033[1m' + "-------------", "red"))
         print(colored('\033[1m' + "|","red"), A[6], colored('\033[1m' +"|","red"), A[7], colored('\033[1m' +"|","red") , A[8], colored('\033[1m' +"|","red"))
         print(colored('\033[1m' + "-------------", "red"))
+
+    #turn() function initiates turns for players to play.
     def turn(var):
-        a = int(input(f"Player {var}, \033[1m Enter a number from 1 to 9:"))
-        if A[a-1] is not player1 and A[a-1] is not player2:
-            A[a-1] = var
+        move = int(input(f"Player {var}, \033[1m Enter a number from 1 to 9:"))
+        if A[move-1] is not player1 and A[move-1] is not player2:
+            A[move-1] = var
             board()
         else:
             print(colored('\033[1m' + "Opps! Already Occupied.", "red"))
             turn()
+
+    #winc() is a function for defining winning conditions for the players.
     def winc():
         global pointindexX
         global pointindexO
@@ -56,12 +65,16 @@ def play():
                 elif A[i] is player2:
                     pointindexO +=1
                 ask()
-                return True            
+                return True      
+
+    #tie() function defines ways the game might be tied.
     def tie():
         if all(i == player1 or i == player2 for i in A) :
             print(colored('\033[1m' + "IT IS A TIE.", "red"))
             ask()
             return True
+            
+    #win() function loops to check if a player has won or not. 
     def win():
             global flag
             while flag is not True:

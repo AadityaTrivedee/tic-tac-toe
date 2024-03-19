@@ -50,7 +50,7 @@ def play():
             board()
         else:
             print(colored('\033[1m' + "Opps! Already Occupied.", "red"))
-            turn()
+            turn(var)
 
     #winc() is a function for defining winning conditions for the players.
     def winc():
